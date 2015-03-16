@@ -132,11 +132,15 @@ def IsFolderUnderClientRoot(in_folder):
         return 0
 
     clientroot = clientroot.lower()
+    WarnUser('CLIENTROOT {0}'.format(clientroot))
     if(clientroot == "null"):
         return 1;
 
     # convert all paths to "os.sep" slashes 
     convertedfolder = in_folder.lower().replace('\\', os.sep).replace('/', os.sep);
+    if sublime.platform() != "windows":
+        convertedfolder = os.path.expanduser(convertedfolder)
+    WarnUser(convertedfolder)
     clientrootindex = convertedfolder.find(clientroot); 
 
     if(clientrootindex == -1):
